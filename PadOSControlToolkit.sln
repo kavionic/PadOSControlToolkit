@@ -1,0 +1,36 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PadOSControlToolkit", "PadOSControlToolkit.vcxproj", "{F39C95AE-7CAC-48F4-88CF-D98B31B7A172}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "PadOSControl", "Applications\PadOSControl\PadOSControl.vcxproj", "{AD82E095-A2D0-4AA7-A12C-EB1778CE7403}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ToolkitSmoke", "Tests\ToolkitSmoke\ToolkitSmoke.vcxproj", "{4AA82B98-FAD4-40BD-BFCB-DDF250CFBAA7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F39C95AE-7CAC-48F4-88CF-D98B31B7A172}.Debug|x64.ActiveCfg = Debug|x64
+		{F39C95AE-7CAC-48F4-88CF-D98B31B7A172}.Debug|x64.Build.0 = Debug|x64
+		{F39C95AE-7CAC-48F4-88CF-D98B31B7A172}.Release|x64.ActiveCfg = Release|x64
+		{F39C95AE-7CAC-48F4-88CF-D98B31B7A172}.Release|x64.Build.0 = Release|x64
+		{AD82E095-A2D0-4AA7-A12C-EB1778CE7403}.Debug|x64.ActiveCfg = Debug|x64
+		{AD82E095-A2D0-4AA7-A12C-EB1778CE7403}.Debug|x64.Build.0 = Debug|x64
+		{AD82E095-A2D0-4AA7-A12C-EB1778CE7403}.Release|x64.ActiveCfg = Release|x64
+		{AD82E095-A2D0-4AA7-A12C-EB1778CE7403}.Release|x64.Build.0 = Release|x64
+		{4AA82B98-FAD4-40BD-BFCB-DDF250CFBAA7}.Debug|x64.ActiveCfg = Debug|x64
+		{4AA82B98-FAD4-40BD-BFCB-DDF250CFBAA7}.Debug|x64.Build.0 = Debug|x64
+		{4AA82B98-FAD4-40BD-BFCB-DDF250CFBAA7}.Release|x64.ActiveCfg = Release|x64
+		{4AA82B98-FAD4-40BD-BFCB-DDF250CFBAA7}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0F3D4FE7-E97E-43C1-9FEE-4B65FBE574F2}
+	EndGlobalSection
+EndGlobal

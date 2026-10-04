@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Restore" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"
+         TreatAsLocalProperty="VcpkgRoot;VcpkgManifestRoot;VcpkgTriplet;VcpkgHostTriplet;VcpkgEnabled;VcpkgEnableClassic;VcpkgEnableManifest;VcpkgManifestInstall;VcpkgAutoBootstrap;VcpkgAutoLink;VcpkgApplocalDeps;VcpkgUseStatic;VcpkgUseMD;VcpkgPropsImported;TLogLocation">
+  <PropertyGroup>
+    <VcpkgRoot>$([System.IO.Path]::GetFullPath('$(PadOSControlToolkitRoot)External\vcpkg\'))</VcpkgRoot>
+    <VcpkgManifestRoot>$([System.IO.Path]::GetFullPath('$(PadOSControlToolkitRoot)'))</VcpkgManifestRoot>
+    <VcpkgTriplet>x64-windows</VcpkgTriplet>
+    <VcpkgHostTriplet>x64-windows</VcpkgHostTriplet>
+    <VcpkgEnabled>true</VcpkgEnabled>
+    <VcpkgEnableClassic>false</VcpkgEnableClassic>
+    <VcpkgEnableManifest>true</VcpkgEnableManifest>
+    <VcpkgManifestInstall>true</VcpkgManifestInstall>
+    <VcpkgAutoBootstrap>true</VcpkgAutoBootstrap>
+    <VcpkgAutoLink>false</VcpkgAutoLink>
+    <VcpkgApplocalDeps>false</VcpkgApplocalDeps>
+    <VcpkgUseStatic>false</VcpkgUseStatic>
+    <VcpkgUseMD>true</VcpkgUseMD>
+    <VcpkgPropsImported>false</VcpkgPropsImported>
+    <TLogLocation>$(PadOSControlToolkitRoot)Build\obj\Vcpkg\</TLogLocation>
+  </PropertyGroup>
+  <Import Project="$(VcpkgRoot)scripts\buildsystems\msbuild\vcpkg.targets" />
+  <ItemGroup>
+    <_ZVcpkgInstallManifestDependenciesInputs Include="$(PadOSControlToolkitRoot)MSBuild\VcpkgPorts\**\*" />
+  </ItemGroup>
+  <Target Name="PrepareRestore">
+    <MakeDir Directories="$(TLogLocation)" />
+  </Target>
+  <Target Name="Restore" DependsOnTargets="PrepareRestore;VcpkgInstallManifestDependencies" />
+</Project>

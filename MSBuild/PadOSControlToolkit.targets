@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="CheckPadOSControlToolkitPaths">
+    <Error Condition="'$(PadOSRoot)' == ''" Text="Set PadOSRoot explicitly in MSBuild/Local.props or with /p:PadOSRoot=... to select the PadOS checkout or installation for this build." />
+    <Error Condition="!Exists('$(PadOSRoot)Include\SerialConsole\BootloaderMessages.h')" Text="PadOSRoot must contain Include/SerialConsole/BootloaderMessages.h. Select a PadOS version containing the shared bootloader protocol." />
+    <Error Condition="'$(MSBuildProjectName)' == 'PadOSControlToolkit' and !Exists('$(FirmwareSourceRoot)KernelSupport\MemoryLayout.h')" Text="Set FirmwareSourceRoot to the firmware Source directory containing KernelSupport/MemoryLayout.h." />
+  </Target>
+  <Target Name="RestorePadOSControlToolkitDependencies"
+          Condition="'$(DesignTimeBuild)' != 'true' and
+                     (('$(ToolkitWithSsh)' == 'true' and '$(LibsshRoot)' == '$(ToolkitDependencyRoot)x64-windows\') or
+                      ('$(ToolkitWithWinFsp)' == 'true' and '$(WinFspRoot)' == '$(ToolkitDependencyRoot)x64-windows\'))">
+    <Error Condition="!Exists('$(PadOSControlToolkitRoot)External\vcpkg\scripts\buildsystems\msbuild\vcpkg.targets')"
+           Text="Initialize the toolkit submodules with git submodule update --init --recursive." />
+    <MSBuild Projects="$(MSBuildThisFileDirectory)RestoreDependencies.proj" Targets="Restore" BuildInParallel="true"
+             Properties="PadOSControlToolkitRoot=$(PadOSControlToolkitRoot);VcpkgInstalledDir=$(ToolkitDependencyRoot)" />
+  </Target>
+  <Target Name="CheckPadOSControlToolkitDependencies" BeforeTargets="PrepareForBuild"
+          DependsOnTargets="CheckPadOSControlToolkitPaths;RestorePadOSControlToolkitDependencies">
+    <Error Condition="'$(ToolkitWithSsh)' == 'true' and '$(DesignTimeBuild)' != 'true' and !Exists('$(LibsshRoot)include\libssh\libssh.h')" Text="LibsshRoot must contain the libssh headers and libraries. Alternatively set ToolkitWithSsh=false." />
+    <Error Condition="'$(ToolkitWithWinFsp)' == 'true' and '$(DesignTimeBuild)' != 'true' and !Exists('$(WinFspRoot)include\winfsp\winfsp.h') and !Exists('$(WinFspRoot)inc\winfsp\winfsp.h')" Text="WinFspRoot must contain the WinFsp SDK headers and libraries. Alternatively set ToolkitWithWinFsp=false." />
+  </Target>
+  <Target Name="CopyPadOSControlToolkitRuntime" AfterTargets="Build" Condition="'$(ConfigurationType)' == 'Application' and '$(ToolkitWithSsh)' == 'true'">
+    <ItemGroup>
+      <PadOSControlRuntime Include="$(LibsshRoot)$(ToolkitDependencyConfiguration)bin\*.dll" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PadOSControlRuntime)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

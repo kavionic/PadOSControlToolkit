@@ -1,0 +1,14 @@
+{
+  "name": "winfsp",
+  "version": "2.1.25156",
+  "description": "WinFsp native SDK headers and import library; the runtime and driver require a separate installation.",
+  "homepage": "https://winfsp.dev/",
+  "license": null,
+  "supports": "windows & x64 & !static",
+  "dependencies": [
+    {
+      "name": "vcpkg-tool-lessmsi",
+      "host": true
+    }
+  ]
+}

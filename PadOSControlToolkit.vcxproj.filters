@@ -1,0 +1,301 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Forms">
+      <UniqueIdentifier>{B1D0BFD6-6202-53AC-9202-058DB9C32EFE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include">
+      <UniqueIdentifier>{403F850A-8855-546F-9128-F31EE1273858}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl">
+      <UniqueIdentifier>{92BFF4C2-535A-5EE8-A609-DEE6E6F34F82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl\Core">
+      <UniqueIdentifier>{F1FA5D68-5125-5432-A30F-13685EDE9131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl\Core\AsyncSerialHandlers">
+      <UniqueIdentifier>{BEA4C7D8-85BE-540F-B402-1469440A92C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl\Core\SDCardSync">
+      <UniqueIdentifier>{24B82EE6-12A8-56C1-B9BC-2A168CF09417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl\Integrations">
+      <UniqueIdentifier>{25CD0557-DF53-5168-AA32-D2849BEC9307}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl\Widgets">
+      <UniqueIdentifier>{1A7EA78F-3D56-5C41-8E4F-C3426D273B3A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\PadOSControl\Widgets\LogView">
+      <UniqueIdentifier>{98F4038C-5EFA-580A-9CB2-AAC45DA17672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source">
+      <UniqueIdentifier>{93386207-F003-5BC5-A47A-ABDFB1667D46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core">
+      <UniqueIdentifier>{ED776377-6F58-54D8-A0CF-EED356EAEEE4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\AsyncSerialHandlers">
+      <UniqueIdentifier>{C9AB9F5B-978E-5B15-B5C6-2722AF38565E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Core\SDCardSync">
+      <UniqueIdentifier>{CB025562-57E1-5AC5-A094-BC84AD45A394}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Integrations">
+      <UniqueIdentifier>{79E07810-4713-5AF2-886E-D79F8C6F6AC5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Widgets">
+      <UniqueIdentifier>{11661416-CB3F-5759-A206-D90F12564B0F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Widgets\LogView">
+      <UniqueIdentifier>{55C4C2AB-6CED-59D2-8261-58C0E4197744}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\AsyncSerialBase.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialCreateDirectory.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialDeleteFile.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialDirectoryReader.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialFileReader.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialFileWriter.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialRenameFile.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialSetFileStat.cpp">
+      <Filter>Source\Core\AsyncSerialHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\DeviceSession.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\HashCalculator.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncDeleteRules.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncFileUtils.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncIgnoreRules.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncLocalScanner.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncModel.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncState.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDStateCrawlingRemote.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDStateCreateDirectory.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDStateDeleteFiles.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDStateDownloadFiles.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDStateTimestampUpdate.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SDCardSync\SDStateUploadFiles.cpp">
+      <Filter>Source\Core\SDCardSync</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\SerialHandler.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Core\ShellPortMux.cpp">
+      <Filter>Source\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Integrations\DeviceFilesystem.cpp">
+      <Filter>Source\Integrations</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Integrations\SshServer.cpp">
+      <Filter>Source\Integrations</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\stdafx.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\CheckableComboBox.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\ConnectionToolbar.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\ControlWindow.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\FileBrowser.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\FirmwareUpdater.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\LogView\LogView.cpp">
+      <Filter>Source\Widgets\LogView</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\LogView\LogViewDelegate.cpp">
+      <Filter>Source\Widgets\LogView</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\LogView\LogViewModel.cpp">
+      <Filter>Source\Widgets\LogView</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\LogView\LogViewTableView.cpp">
+      <Filter>Source\Widgets\LogView</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\SDCardSync.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Widgets\SearchableComboBox.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\AsyncSerialBase.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialCreateDirectory.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialDeleteFile.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialDirectoryReader.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialFileReader.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialFileWriter.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialRenameFile.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialSetFileStat.h">
+      <Filter>Include\PadOSControl\Core\AsyncSerialHandlers</Filter>
+    </ClInclude>
+    <QtMoc Include="Include\PadOSControl\Widgets\CheckableComboBox.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\ConnectionToolbar.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\ControlWindow.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Integrations\DeviceFilesystem.h">
+      <Filter>Include\PadOSControl\Integrations</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Core\DeviceSession.h">
+      <Filter>Include\PadOSControl\Core</Filter>
+    </QtMoc>
+    <ClInclude Include="Include\PadOSControl\Core\DeviceSessionOptions.h">
+      <Filter>Include\PadOSControl\Core</Filter>
+    </ClInclude>
+    <QtMoc Include="Include\PadOSControl\Widgets\FileBrowser.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\FirmwareUpdater.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <ClInclude Include="Include\PadOSControl\Core\HashCalculator.h">
+      <Filter>Include\PadOSControl\Core</Filter>
+    </ClInclude>
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogView.h">
+      <Filter>Include\PadOSControl\Widgets\LogView</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogViewDelegate.h">
+      <Filter>Include\PadOSControl\Widgets\LogView</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogViewModel.h">
+      <Filter>Include\PadOSControl\Widgets\LogView</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogViewTableView.h">
+      <Filter>Include\PadOSControl\Widgets\LogView</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Widgets\SDCardSync.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncDeleteRules.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncDownloadQueue.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncFileUtils.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncIgnoreRules.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncLocalScanner.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncModel.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncState.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncUploadQueue.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateCrawlingRemote.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateCreateDirectory.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateDeleteFiles.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateDownloadFiles.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateTimestampUpdate.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateUploadFiles.h">
+      <Filter>Include\PadOSControl\Core\SDCardSync</Filter>
+    </ClInclude>
+    <QtMoc Include="Include\PadOSControl\Widgets\SearchableComboBox.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Core\SerialHandler.h">
+      <Filter>Include\PadOSControl\Core</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Core\ShellPortMux.h">
+      <Filter>Include\PadOSControl\Core</Filter>
+    </QtMoc>
+    <QtMoc Include="Include\PadOSControl\Integrations\SshServer.h">
+      <Filter>Include\PadOSControl\Integrations</Filter>
+    </QtMoc>
+    <ClInclude Include="Source\stdafx.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <QtUic Include="Forms\FileBrowser.ui">
+      <Filter>Forms</Filter>
+    </QtUic>
+    <QtUic Include="Forms\FirmwareUpdater.ui">
+      <Filter>Forms</Filter>
+    </QtUic>
+    <QtUic Include="Forms\SDCardSync.ui">
+      <Filter>Forms</Filter>
+    </QtUic>
+  </ItemGroup>
+</Project>

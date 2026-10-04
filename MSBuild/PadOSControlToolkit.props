@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PadOSControlToolkitRoot Condition="'$(PadOSControlToolkitRoot)' == ''">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</PadOSControlToolkitRoot>
+  </PropertyGroup>
+  <Import Project="$(PadOSControlToolkitRoot)MSBuild\Local.props" Condition="Exists('$(PadOSControlToolkitRoot)MSBuild\Local.props')" />
+  <PropertyGroup>
+    <FirmwareSourceRoot Condition="'$(FirmwareSourceRoot)' == ''">$(PadOSControlToolkitRoot)..\Rainbow3DFirmware\Firmware\Source\</FirmwareSourceRoot>
+    <ToolkitDependencyRoot>$([System.IO.Path]::GetFullPath('$(PadOSControlToolkitRoot)Build\vcpkg_installed\'))</ToolkitDependencyRoot>
+    <LibsshRoot Condition="'$(LibsshRoot)' == ''">$(ToolkitDependencyRoot)x64-windows\</LibsshRoot>
+    <WinFspRoot Condition="'$(WinFspRoot)' == ''">$(ToolkitDependencyRoot)x64-windows\</WinFspRoot>
+    <ToolkitWithSsh Condition="'$(ToolkitWithSsh)' == ''">true</ToolkitWithSsh>
+    <ToolkitWithWinFsp Condition="'$(ToolkitWithWinFsp)' == ''">true</ToolkitWithWinFsp>
+    <ToolkitDependencyConfiguration Condition="'$(Configuration)' == 'Debug'">debug\</ToolkitDependencyConfiguration>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(PadOSControlToolkitRoot)Include;$(PadOSControlToolkitRoot)GeneratedFiles\$(Configuration);$(PadOSRoot)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp23</LanguageStandard>
+    </ClCompile>
+    <QtMoc>
+      <AdditionalIncludeDirectories>$(PadOSControlToolkitRoot)Include;$(PadOSControlToolkitRoot)GeneratedFiles\$(Configuration);$(PadOSRoot)Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </QtMoc>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(ToolkitWithSsh)' == 'true'">
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_LIBSSH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(LibsshRoot)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(LibsshRoot)$(ToolkitDependencyConfiguration)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>ssh.lib;Ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(ToolkitWithWinFsp)' == 'true'">
+    <ClCompile>
+      <PreprocessorDefinitions>HAVE_WINFSP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(WinFspRoot)include;$(WinFspRoot)inc;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalLibraryDirectories>$(WinFspRoot)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>winfsp-x64.lib;delayimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <DelayLoadDLLs>winfsp-x64.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

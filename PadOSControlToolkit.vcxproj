@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64"><Configuration>Debug</Configuration><Platform>x64</Platform></ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64"><Configuration>Release</Configuration><Platform>x64</Platform></ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{F39C95AE-7CAC-48F4-88CF-D98B31B7A172}</ProjectGuid>
+    <Keyword>QtVS_v304</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <QtMsBuild Condition="'$(QtMsBuild)' == ''">$(LocalAppData)\QtMsBuild</QtMsBuild>
+    <PadOSControlToolkitRoot>$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\.\'))</PadOSControlToolkitRoot>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v143</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseDebugLibraries Condition="'$(Configuration)' == 'Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)' != 'Debug'">false</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  <PropertyGroup Label="QtSettings">
+    <QtInstall>6.8.1_msvc2022_64</QtInstall>
+    <QtModules>core;gui;widgets;serialport;concurrent;network;xml</QtModules>
+  </PropertyGroup>
+  <Import Project="$(QtMsBuild)\Qt.props" />
+  <Import Project="$(PadOSControlToolkitRoot)MSBuild\PadOSControlToolkit.props" />
+  <PropertyGroup>
+    <OutDir>$(PadOSControlToolkitRoot)Build\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(PadOSControlToolkitRoot)Build\obj\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <TargetName>PadOSControlToolkit</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4267;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <PreprocessorDefinitions>UNICODE;_UNICODE;WIN32;WIN64;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(PadOSControlToolkitRoot)Source;$(FirmwareSourceRoot);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary Condition="'$(Configuration)' == 'Debug'">MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary Condition="'$(Configuration)' != 'Debug'">MultiThreadedDLL</RuntimeLibrary>
+      <Optimization Condition="'$(Configuration)' == 'Debug'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)' != 'Debug'">MaxSpeed</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <QtMoc>
+      <QtMocDir>$(PadOSControlToolkitRoot)GeneratedFiles\$(Configuration)</QtMocDir>
+      <QtMocFileName>moc_%(Filename).cpp</QtMocFileName>
+      <ForceInclude>stdafx.h;%(FullPath)</ForceInclude>
+    </QtMoc>
+    <QtUic>
+      <QtUicDir>$(PadOSControlToolkitRoot)GeneratedFiles\$(Configuration)</QtUicDir>
+      <QtUicFileName>ui_%(Filename).h</QtUicFileName>
+    </QtUic>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\AsyncSerialBase.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialCreateDirectory.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialDeleteFile.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialDirectoryReader.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialFileReader.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialFileWriter.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialRenameFile.cpp" />
+    <ClCompile Include="Source\Core\AsyncSerialHandlers\SerialSetFileStat.cpp" />
+    <ClCompile Include="Source\Core\DeviceSession.cpp" />
+    <ClCompile Include="Source\Core\HashCalculator.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncDeleteRules.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncFileUtils.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncIgnoreRules.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncLocalScanner.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncModel.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDCardSyncState.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDStateCrawlingRemote.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDStateCreateDirectory.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDStateDeleteFiles.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDStateDownloadFiles.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDStateTimestampUpdate.cpp" />
+    <ClCompile Include="Source\Core\SDCardSync\SDStateUploadFiles.cpp" />
+    <ClCompile Include="Source\Core\SerialHandler.cpp" />
+    <ClCompile Include="Source\Core\ShellPortMux.cpp" />
+    <ClCompile Include="Source\Integrations\DeviceFilesystem.cpp" Condition="'$(ToolkitWithWinFsp)' == 'true'" />
+    <ClCompile Include="Source\Integrations\SshServer.cpp" Condition="'$(ToolkitWithSsh)' == 'true'" />
+    <ClCompile Include="Source\stdafx.cpp"><PrecompiledHeader>Create</PrecompiledHeader></ClCompile>
+    <ClCompile Include="Source\Widgets\CheckableComboBox.cpp" />
+    <ClCompile Include="Source\Widgets\ConnectionToolbar.cpp" />
+    <ClCompile Include="Source\Widgets\ControlWindow.cpp" />
+    <ClCompile Include="Source\Widgets\FileBrowser.cpp" />
+    <ClCompile Include="Source\Widgets\FirmwareUpdater.cpp" />
+    <ClCompile Include="Source\Widgets\LogView\LogView.cpp" />
+    <ClCompile Include="Source\Widgets\LogView\LogViewDelegate.cpp" />
+    <ClCompile Include="Source\Widgets\LogView\LogViewModel.cpp" />
+    <ClCompile Include="Source\Widgets\LogView\LogViewTableView.cpp" />
+    <ClCompile Include="Source\Widgets\SDCardSync.cpp" />
+    <ClCompile Include="Source\Widgets\SearchableComboBox.cpp" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\AsyncSerialBase.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialCreateDirectory.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialDeleteFile.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialDirectoryReader.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialFileReader.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialFileWriter.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialRenameFile.h" />
+    <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialSetFileStat.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\CheckableComboBox.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\ConnectionToolbar.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\ControlWindow.h" />
+    <QtMoc Include="Include\PadOSControl\Integrations\DeviceFilesystem.h" Condition="'$(ToolkitWithWinFsp)' == 'true'" />
+    <QtMoc Include="Include\PadOSControl\Core\DeviceSession.h" />
+    <ClInclude Include="Include\PadOSControl\Core\DeviceSessionOptions.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\FileBrowser.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\FirmwareUpdater.h" />
+    <ClInclude Include="Include\PadOSControl\Core\HashCalculator.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogView.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogViewDelegate.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogViewModel.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\LogView\LogViewTableView.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\SDCardSync.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncDeleteRules.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncDownloadQueue.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncFileUtils.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncIgnoreRules.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncLocalScanner.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncModel.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncState.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDCardSyncUploadQueue.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateCrawlingRemote.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateCreateDirectory.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateDeleteFiles.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateDownloadFiles.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateTimestampUpdate.h" />
+    <ClInclude Include="Include\PadOSControl\Core\SDCardSync\SDStateUploadFiles.h" />
+    <QtMoc Include="Include\PadOSControl\Widgets\SearchableComboBox.h" />
+    <QtMoc Include="Include\PadOSControl\Core\SerialHandler.h" />
+    <QtMoc Include="Include\PadOSControl\Core\ShellPortMux.h" />
+    <QtMoc Include="Include\PadOSControl\Integrations\SshServer.h" Condition="'$(ToolkitWithSsh)' == 'true'" />
+    <ClInclude Include="Source\stdafx.h" />
+    <QtUic Include="Forms\FileBrowser.ui" />
+    <QtUic Include="Forms\FirmwareUpdater.ui" />
+    <QtUic Include="Forms\SDCardSync.ui" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <Import Project="$(QtMsBuild)\qt.targets" />
+  <Import Project="$(PadOSControlToolkitRoot)MSBuild\PadOSControlToolkit.targets" />
+</Project>
