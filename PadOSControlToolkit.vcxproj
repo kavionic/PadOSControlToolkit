@@ -91,6 +91,7 @@
     <ClCompile Include="Source\stdafx.cpp"><PrecompiledHeader>Create</PrecompiledHeader></ClCompile>
     <ClCompile Include="Source\Widgets\CheckableComboBox.cpp" />
     <ClCompile Include="Source\Widgets\ConnectionToolbar.cpp" />
+    <ClCompile Include="Source\Widgets\ContentsScrollArea.cpp" />
     <ClCompile Include="Source\Widgets\ControlWindow.cpp" />
     <ClCompile Include="Source\Widgets\FileBrowser.cpp" />
     <ClCompile Include="Source\Widgets\FirmwareUpdater.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Include\PadOSControl\Core\AsyncSerialHandlers\SerialSetFileStat.h" />
     <QtMoc Include="Include\PadOSControl\Widgets\CheckableComboBox.h" />
     <QtMoc Include="Include\PadOSControl\Widgets\ConnectionToolbar.h" />
+    <ClInclude Include="Include\PadOSControl\Widgets\ContentsScrollArea.h" />
     <QtMoc Include="Include\PadOSControl\Widgets\ControlWindow.h" />
     <QtMoc Include="Include\PadOSControl\Integrations\DeviceFilesystem.h" Condition="'$(ToolkitWithWinFsp)' == 'true'" />
     <QtMoc Include="Include\PadOSControl\Core\DeviceSession.h" />

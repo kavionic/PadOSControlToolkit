@@ -5,6 +5,7 @@
 // SPDX-License-Identifier: Apache-2.0
 ///////////////////////////////////////////////////////////////////////////////
 
+#include <PadOSControl/Core/ShellPortMux.h>
 #include <PadOSControl/Widgets/ConnectionToolbar.h>
 #include <PadOSControl/Widgets/ControlWindow.h>
 #include <PadOSControl/Widgets/FileBrowser.h>
@@ -57,6 +58,24 @@ static bool Check(bool condition, const char* message)
     return condition;
 }
 
+static bool CheckShellPortOpenFailure()
+{
+    ShellPortMux shellPort;
+    size_t portLostCount = 0;
+    QObject::connect(&shellPort, &ShellPortMux::PortLost, &shellPort, [&portLostCount]() { ++portLostCount; });
+
+    bool succeeded = true;
+    for (size_t attempt = 1; attempt <= 2; ++attempt)
+    {
+        shellPort.Open("ToolkitSmokeMissingShellPort");
+        succeeded &= Check(portLostCount == attempt, "Report each failed shell port open once");
+        shellPort.Close();
+        QCoreApplication::sendPostedEvents(nullptr, QEvent::DeferredDelete);
+        succeeded &= Check(shellPort.findChildren<QSerialPort*>().isEmpty(), "Release failed shell port objects");
+    }
+    return succeeded;
+}
+
 static void SendMouseEvent(
     QMainWindow& window,
     QEvent::Type type,
@@ -96,7 +115,7 @@ int main(int argc, char* argv[])
 
     QSettings().setValue("SerialPort/selectedPort", "ToolkitSmokeMissingPort");
 
-    bool succeeded = true;
+    bool succeeded = CheckShellPortOpenFailure();
     {
         ControlWindow window;
         const auto docks = window.findChildren<QDockWidget*>();

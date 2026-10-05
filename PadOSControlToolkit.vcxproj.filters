@@ -138,6 +138,9 @@
     <ClCompile Include="Source\Widgets\ConnectionToolbar.cpp">
       <Filter>Source\Widgets</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Widgets\ContentsScrollArea.cpp">
+      <Filter>Source\Widgets</Filter>
+    </ClCompile>
     <ClCompile Include="Source\Widgets\ControlWindow.cpp">
       <Filter>Source\Widgets</Filter>
     </ClCompile>
@@ -195,6 +198,9 @@
     <QtMoc Include="Include\PadOSControl\Widgets\ConnectionToolbar.h">
       <Filter>Include\PadOSControl\Widgets</Filter>
     </QtMoc>
+    <ClInclude Include="Include\PadOSControl\Widgets\ContentsScrollArea.h">
+      <Filter>Include\PadOSControl\Widgets</Filter>
+    </ClInclude>
     <QtMoc Include="Include\PadOSControl\Widgets\ControlWindow.h">
       <Filter>Include\PadOSControl\Widgets</Filter>
     </QtMoc>

@@ -32,13 +32,16 @@ void ShellPortMux::Open(const QString& portName)
     m_SerialPort->setDataBits(QSerialPort::Data8);
     m_SerialPort->setParity(QSerialPort::NoParity);
 
-    connect(m_SerialPort, &QSerialPort::readyRead,    this, &ShellPortMux::SlotDataReady);
-    connect(m_SerialPort, &QSerialPort::errorOccurred, this, &ShellPortMux::SlotPortError);
-
-    if (!m_SerialPort->open(QIODevice::ReadWrite))
+    if (m_SerialPort->open(QIODevice::ReadWrite))
+    {
+        connect(m_SerialPort, &QSerialPort::readyRead, this, &ShellPortMux::SlotDataReady);
+        connect(m_SerialPort, &QSerialPort::errorOccurred, this, &ShellPortMux::SlotPortError);
+    }
+    else
     {
         m_SerialPort->deleteLater();
         m_SerialPort = nullptr;
+        emit PortLost();
     }
 }
 
