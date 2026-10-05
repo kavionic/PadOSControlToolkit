@@ -16,6 +16,7 @@
 
 #include <QCloseEvent>
 #include <QDockWidget>
+#include <QVBoxLayout>
 
 static constexpr int CONTROL_WINDOW_LAYOUT_VERSION = 2;
 
@@ -56,11 +57,37 @@ ControlWindow::~ControlWindow()
     }
 }
 
-QDockWidget* ControlWindow::AddPanel(const QString& identifier, const QString& title, QWidget* panel)
+QDockWidget* ControlWindow::AddPanel(const QString& identifier, const QString& title, QWidget* panel, PanelSizing sizing)
 {
     QDockWidget* dock = new QDockWidget(title, this);
     dock->setObjectName(identifier);
-    dock->setWidget(panel);
+    if (sizing == PanelSizing::CompactHeight)
+    {
+        QSizePolicy policy = panel->sizePolicy();
+        policy.setVerticalPolicy(QSizePolicy::Fixed);
+        panel->setSizePolicy(policy);
+
+        QWidget* container = new QWidget(dock);
+        QVBoxLayout* layout = new QVBoxLayout(container);
+        layout->setContentsMargins(0, 0, 0, 0);
+        layout->setSpacing(0);
+        layout->addWidget(panel);
+        layout->addStretch();
+        policy.setVerticalPolicy(QSizePolicy::Minimum);
+        container->setSizePolicy(policy);
+        dock->setWidget(container);
+
+        connect(dock, &QDockWidget::topLevelChanged, container, [container](bool floating)
+        {
+            QSizePolicy policy = container->sizePolicy();
+            policy.setVerticalPolicy(floating ? QSizePolicy::Fixed : QSizePolicy::Minimum);
+            container->setSizePolicy(policy);
+        });
+    }
+    else
+    {
+        dock->setWidget(panel);
+    }
     // Keep the dock-only layout in one area so its splitters resize neighbouring panels.
     dock->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dock);
@@ -105,7 +132,7 @@ void ControlWindow::CreateStandardPanels()
 
     m_FileBrowserDock = AddPanel("PadOS.Files", tr("Files"), m_FileBrowser);
     m_SDCardSyncDock = AddPanel("PadOS.SDCardSync", tr("SD-card synchronization"), m_SDCardSync);
-    m_FirmwareUpdaterDock = AddPanel("PadOS.Firmware", tr("Firmware update"), m_FirmwareUpdater);
+    m_FirmwareUpdaterDock = AddPanel("PadOS.Firmware", tr("Firmware update"), m_FirmwareUpdater, PanelSizing::CompactHeight);
 
     m_LogViewDock = AddPanel("PadOS.Log", tr("Log"), m_LogView);
 

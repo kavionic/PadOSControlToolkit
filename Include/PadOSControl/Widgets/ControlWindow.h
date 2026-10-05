@@ -24,6 +24,13 @@ class ControlWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    enum class PanelSizing
+    {
+        Default,
+        // Keep preferred content height, with padding below when docked and fixed height when floating.
+        CompactHeight
+    };
+
     explicit ControlWindow(QWidget* parent = nullptr);
     explicit ControlWindow(const DeviceSessionOptions& options, QWidget* parent = nullptr);
     ~ControlWindow() override;
@@ -36,7 +43,11 @@ public:
     QDockWidget* GetSDCardSyncDock() const { return m_SDCardSyncDock; }
     QDockWidget* GetLogViewDock() const { return m_LogViewDock; }
 
-    QDockWidget* AddPanel(const QString& identifier, const QString& title, QWidget* panel);
+    QDockWidget* AddPanel(
+        const QString& identifier,
+        const QString& title,
+        QWidget* panel,
+        PanelSizing sizing = PanelSizing::Default);
     void Start();
 
 protected:
