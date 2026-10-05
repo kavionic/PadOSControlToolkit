@@ -17,7 +17,7 @@
 #include <QCloseEvent>
 #include <QDockWidget>
 
-static constexpr int CONTROL_WINDOW_LAYOUT_VERSION = 1;
+static constexpr int CONTROL_WINDOW_LAYOUT_VERSION = 2;
 
 ControlWindow::ControlWindow(QWidget* parent)
     : ControlWindow(DeviceSessionOptions{}, parent)
@@ -56,12 +56,14 @@ ControlWindow::~ControlWindow()
     }
 }
 
-QDockWidget* ControlWindow::AddPanel(const QString& identifier, const QString& title, QWidget* panel, Qt::DockWidgetArea area)
+QDockWidget* ControlWindow::AddPanel(const QString& identifier, const QString& title, QWidget* panel)
 {
     QDockWidget* dock = new QDockWidget(title, this);
     dock->setObjectName(identifier);
     dock->setWidget(panel);
-    addDockWidget(area, dock);
+    // Keep the dock-only layout in one area so its splitters resize neighbouring panels.
+    dock->setAllowedAreas(Qt::LeftDockWidgetArea);
+    addDockWidget(Qt::LeftDockWidgetArea, dock);
     m_ViewMenu->addAction(dock->toggleViewAction());
     m_Docks.push_back(dock);
     return dock;
@@ -101,23 +103,24 @@ void ControlWindow::CreateStandardPanels()
     m_FirmwareUpdater->SetDeviceSession(&m_DeviceSession);
     m_SDCardSync->SetDeviceSession(&m_DeviceSession);
 
-    QDockWidget* filesDock = AddPanel("PadOS.Files", tr("Files"), m_FileBrowser, Qt::LeftDockWidgetArea);
-    QDockWidget* syncDock = AddPanel("PadOS.SDCardSync", tr("SD-card synchronization"), m_SDCardSync, Qt::LeftDockWidgetArea);
-    QDockWidget* firmwareDock = AddPanel("PadOS.Firmware", tr("Firmware update"), m_FirmwareUpdater, Qt::LeftDockWidgetArea);
+    m_FileBrowserDock = AddPanel("PadOS.Files", tr("Files"), m_FileBrowser);
+    m_SDCardSyncDock = AddPanel("PadOS.SDCardSync", tr("SD-card synchronization"), m_SDCardSync);
+    m_FirmwareUpdaterDock = AddPanel("PadOS.Firmware", tr("Firmware update"), m_FirmwareUpdater);
 
-    tabifyDockWidget(filesDock, syncDock);
-    tabifyDockWidget(filesDock, firmwareDock);
+    m_LogViewDock = AddPanel("PadOS.Log", tr("Log"), m_LogView);
 
-    filesDock->raise();
+    splitDockWidget(m_FileBrowserDock, m_LogViewDock, Qt::Vertical);
+    tabifyDockWidget(m_FileBrowserDock, m_SDCardSyncDock);
+    tabifyDockWidget(m_FileBrowserDock, m_FirmwareUpdaterDock);
 
-    AddPanel("PadOS.Log", tr("Log"), m_LogView, Qt::BottomDockWidgetArea);
+    m_FileBrowserDock->raise();
 }
 
 void ControlWindow::CreateConnectionToolbar()
 {
     m_ConnectionToolbar = new ConnectionToolbar(m_DeviceSession, this);
     m_ConnectionToolbar->setObjectName("PadOS.Connection");
-    addToolBar(m_ConnectionToolbar);
+    addToolBar(Qt::TopToolBarArea, m_ConnectionToolbar);
     m_ViewMenu->addAction(m_ConnectionToolbar->toggleViewAction());
 }
 

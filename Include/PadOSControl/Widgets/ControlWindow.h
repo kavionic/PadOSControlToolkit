@@ -29,7 +29,14 @@ public:
     ~ControlWindow() override;
 
     DeviceSession& GetDeviceSession() { return m_DeviceSession; }
-    QDockWidget* AddPanel(const QString& identifier, const QString& title, QWidget* panel, Qt::DockWidgetArea area);
+    const DeviceSession& GetDeviceSession() const { return m_DeviceSession; }
+
+    QDockWidget* GetFileBrowserDock() const { return m_FileBrowserDock; }
+    QDockWidget* GetFirmwareUpdaterDock() const { return m_FirmwareUpdaterDock; }
+    QDockWidget* GetSDCardSyncDock() const { return m_SDCardSyncDock; }
+    QDockWidget* GetLogViewDock() const { return m_LogViewDock; }
+
+    QDockWidget* AddPanel(const QString& identifier, const QString& title, QWidget* panel);
     void Start();
 
 protected:
@@ -47,6 +54,10 @@ private:
     FirmwareUpdater* m_FirmwareUpdater = nullptr;
     LogView* m_LogView = nullptr;
     SDCardSync* m_SDCardSync = nullptr;
+    QDockWidget* m_FileBrowserDock = nullptr;
+    QDockWidget* m_FirmwareUpdaterDock = nullptr;
+    QDockWidget* m_SDCardSyncDock = nullptr;
+    QDockWidget* m_LogViewDock = nullptr;
     std::vector<QDockWidget*> m_Docks;
     QByteArray m_DefaultLayout;
 };

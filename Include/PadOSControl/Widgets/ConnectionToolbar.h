@@ -21,8 +21,12 @@ class ConnectionToolbar : public QToolBar
 public:
     explicit ConnectionToolbar(DeviceSession& deviceSession, QWidget* parent = nullptr);
 
+protected:
+    bool eventFilter(QObject* watched, QEvent* event) override;
+
 private:
     void RefreshPorts();
+    void SelectPort(const QString& portName);
     void Reconnect();
     void UpdateConnectionStatus();
 

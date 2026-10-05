@@ -10,10 +10,14 @@
 #include "PadOSControl/Widgets/ConnectionToolbar.h"
 #include "PadOSControl/Core/DeviceSession.h"
 
+#include <QAbstractItemView>
+#include <QCollator>
 #include <QComboBox>
+#include <QEvent>
 #include <QLabel>
 #include <QSerialPortInfo>
 #include <QSignalBlocker>
+#include <QSettings>
 
 ConnectionToolbar::ConnectionToolbar(DeviceSession& deviceSession, QWidget* parent)
     : QToolBar(tr("Connection"), parent)
@@ -29,6 +33,9 @@ ConnectionToolbar::ConnectionToolbar(DeviceSession& deviceSession, QWidget* pare
     addWidget(m_ConnectionStatus);
 
     RefreshPorts();
+    SelectPort(QSettings().value("SerialPort/selectedPort").toString());
+    m_DeviceSession.GetSerialHandler().SetForcedPort(m_PortCombo->currentData().toString());
+    m_PortCombo->view()->installEventFilter(this);
     connect(m_PortCombo, &QComboBox::activated, this, &ConnectionToolbar::Reconnect);
     connect(&m_DeviceSession, &DeviceSession::SignalMainStateChanged, this, &ConnectionToolbar::UpdateConnectionStatus);
     connect(
@@ -40,19 +47,39 @@ ConnectionToolbar::ConnectionToolbar(DeviceSession& deviceSession, QWidget* pare
     UpdateConnectionStatus();
 }
 
+bool ConnectionToolbar::eventFilter(QObject* watched, QEvent* event)
+{
+    if (watched == m_PortCombo->view() && event->type() == QEvent::Show) {
+        RefreshPorts();
+    }
+    return QToolBar::eventFilter(watched, event);
+}
+
 void ConnectionToolbar::RefreshPorts()
 {
     const QString selectedPort = m_PortCombo->currentData().toString();
     const QSignalBlocker blocker(m_PortCombo);
     m_PortCombo->clear();
     m_PortCombo->addItem(tr("Automatic"), QString());
-    for (const QSerialPortInfo& port : QSerialPortInfo::availablePorts()) {
+    QList<QSerialPortInfo> ports = QSerialPortInfo::availablePorts();
+    QCollator collator;
+    collator.setNumericMode(true);
+    std::sort(ports.begin(), ports.end(), [&collator](const QSerialPortInfo& lhs, const QSerialPortInfo& rhs)
+    {
+        return collator.compare(lhs.portName(), rhs.portName()) < 0;
+    });
+    for (const QSerialPortInfo& port : ports) {
         m_PortCombo->addItem(port.portName() + " — " + port.description(), port.portName());
     }
-    int selectedIndex = m_PortCombo->findData(selectedPort);
+    SelectPort(selectedPort);
+}
+
+void ConnectionToolbar::SelectPort(const QString& portName)
+{
+    int selectedIndex = m_PortCombo->findData(portName);
     if (selectedIndex < 0)
     {
-        m_PortCombo->addItem(selectedPort, selectedPort);
+        m_PortCombo->addItem(portName, portName);
         selectedIndex = m_PortCombo->count() - 1;
     }
     m_PortCombo->setCurrentIndex(selectedIndex);
@@ -60,7 +87,9 @@ void ConnectionToolbar::RefreshPorts()
 
 void ConnectionToolbar::Reconnect()
 {
-    m_DeviceSession.GetSerialHandler().SetForcedPort(m_PortCombo->currentData().toString());
+    const QString portName = m_PortCombo->currentData().toString();
+    QSettings().setValue("SerialPort/selectedPort", portName);
+    m_DeviceSession.GetSerialHandler().SetForcedPort(portName);
 }
 
 void ConnectionToolbar::UpdateConnectionStatus()

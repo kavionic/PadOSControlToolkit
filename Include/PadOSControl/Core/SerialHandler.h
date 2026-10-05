@@ -65,6 +65,7 @@ public:
     void CloseSerial();
     void ResetConnection();
 
+    // Selecting a port while stopped does not start discovery.
     void SetForcedPort(const QString& portName);
     QString GetConnectedPortName() const;
 

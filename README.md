@@ -13,7 +13,8 @@ management, plus a minimal reference application.
 - `LogView`, `FileBrowser`, `FirmwareUpdater`, and `SDCardSync` are ordinary Qt widgets.
   Each is attached to a `DeviceSession` with `SetDeviceSession()`.
 - `ConnectionToolbar` is a reusable `QToolBar` constructed with a `DeviceSession`.
-  It provides port selection, refresh/reconnect actions, and connection status. Add it
+  It provides port selection, refresh/reconnect actions, and connection status, and
+  remembers the selected port in application settings. Add it
   to a `QMainWindow` and use its `toggleViewAction()` for a checkable menu entry.
 - The asynchronous filesystem helpers and SD synchronization states are also available
   independently of the standard window.
@@ -108,8 +109,12 @@ location, including a submodule.
 For a standard application, follow `Applications/PadOSControl/main.cpp`. To extend it,
 construct a `ControlWindow`, create your own widgets using its `GetDeviceSession()`,
 and register them with `AddPanel()` before calling `Start()`. Give each dock a stable,
-unique identifier so saved layouts can be restored. A custom central widget can also
-be installed with the normal `QMainWindow` API.
+unique identifier so saved layouts can be restored. Panels share one dock area; arrange
+rows and columns with `splitDockWidget()` and groups of tabs with `tabifyDockWidget()`.
+This keeps the dividers resizable in windows without a central widget. A custom central
+widget can also be installed with the normal `QMainWindow` API. Use `GetFileBrowserDock()`,
+`GetFirmwareUpdaterDock()`, `GetSDCardSyncDock()`, and `GetLogViewDock()` with Qt
+docking functions to arrange the standard tools alongside application panels.
 
 For a custom layout, create a `DeviceSession`, attach the toolkit widgets, and call
 `Start()` after all packet handlers and signal connections are registered. Call

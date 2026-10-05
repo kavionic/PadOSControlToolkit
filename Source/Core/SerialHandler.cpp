@@ -317,7 +317,9 @@ void SerialHandler::SlotPortOpened(QSerialPort* port, uint32_t scanID)
 void SerialHandler::SetForcedPort(const QString& portName)
 {
     m_ForcedPortName = portName;
-    ScanSerialPorts();
+    if (m_State != State::Idle) {
+        ScanSerialPorts();
+    }
 }
 
 ///////////////////////////////////////////////////////////////////////////////
