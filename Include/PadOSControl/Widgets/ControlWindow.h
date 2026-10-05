@@ -8,7 +8,9 @@
 #pragma once
 
 #include <vector>
+#include <QFlags>
 #include <QMainWindow>
+#include <QSizePolicy>
 #include "PadOSControl/Core/DeviceSession.h"
 
 class ConnectionToolbar;
@@ -24,12 +26,14 @@ class ControlWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    // Compact axes allow content sizes between minimum and preferred, with spare space outside the content when docked.
     enum class PanelSizing
     {
-        Default,
-        // Keep preferred content height, with padding below when docked and fixed height when floating.
-        CompactHeight
+        Default = 0,
+        CompactWidth = 0x01,
+        CompactHeight = 0x02
     };
+    Q_DECLARE_FLAGS(PanelSizingFlags, PanelSizing)
 
     explicit ControlWindow(QWidget* parent = nullptr);
     explicit ControlWindow(const DeviceSessionOptions& options, QWidget* parent = nullptr);
@@ -47,13 +51,15 @@ public:
         const QString& identifier,
         const QString& title,
         QWidget* panel,
-        PanelSizing sizing = PanelSizing::Default);
+        PanelSizingFlags sizing = {});
     void Start();
 
 protected:
     void closeEvent(QCloseEvent* event) override;
 
 private:
+    QWidget* CreatePanelContainer(QWidget* panel, QDockWidget* dock, PanelSizingFlags sizing);
+    static QSizePolicy GetPanelSizePolicy(QWidget* panel, PanelSizingFlags sizing, QSizePolicy::Policy compactPolicy);
     void CreateStandardPanels();
     void CreateConnectionToolbar();
     void ResetLayout();
@@ -72,3 +78,5 @@ private:
     std::vector<QDockWidget*> m_Docks;
     QByteArray m_DefaultLayout;
 };
+
+Q_DECLARE_OPERATORS_FOR_FLAGS(ControlWindow::PanelSizingFlags)

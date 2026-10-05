@@ -16,7 +16,7 @@
 
 #include <QCloseEvent>
 #include <QDockWidget>
-#include <QVBoxLayout>
+#include <QGridLayout>
 
 static constexpr int CONTROL_WINDOW_LAYOUT_VERSION = 2;
 
@@ -57,37 +57,11 @@ ControlWindow::~ControlWindow()
     }
 }
 
-QDockWidget* ControlWindow::AddPanel(const QString& identifier, const QString& title, QWidget* panel, PanelSizing sizing)
+QDockWidget* ControlWindow::AddPanel(const QString& identifier, const QString& title, QWidget* panel, PanelSizingFlags sizing)
 {
     QDockWidget* dock = new QDockWidget(title, this);
     dock->setObjectName(identifier);
-    if (sizing == PanelSizing::CompactHeight)
-    {
-        QSizePolicy policy = panel->sizePolicy();
-        policy.setVerticalPolicy(QSizePolicy::Fixed);
-        panel->setSizePolicy(policy);
-
-        QWidget* container = new QWidget(dock);
-        QVBoxLayout* layout = new QVBoxLayout(container);
-        layout->setContentsMargins(0, 0, 0, 0);
-        layout->setSpacing(0);
-        layout->addWidget(panel);
-        layout->addStretch();
-        policy.setVerticalPolicy(QSizePolicy::Minimum);
-        container->setSizePolicy(policy);
-        dock->setWidget(container);
-
-        connect(dock, &QDockWidget::topLevelChanged, container, [container](bool floating)
-        {
-            QSizePolicy policy = container->sizePolicy();
-            policy.setVerticalPolicy(floating ? QSizePolicy::Fixed : QSizePolicy::Minimum);
-            container->setSizePolicy(policy);
-        });
-    }
-    else
-    {
-        dock->setWidget(panel);
-    }
+    dock->setWidget(sizing ? CreatePanelContainer(panel, dock, sizing) : panel);
     // Keep the dock-only layout in one area so its splitters resize neighbouring panels.
     dock->setAllowedAreas(Qt::LeftDockWidgetArea);
     addDockWidget(Qt::LeftDockWidgetArea, dock);
@@ -116,6 +90,45 @@ void ControlWindow::closeEvent(QCloseEvent* event)
     settings.setValue("MainWindow/windowState", saveState(CONTROL_WINDOW_LAYOUT_VERSION));
     m_DeviceSession.Stop();
     QMainWindow::closeEvent(event);
+}
+
+QWidget* ControlWindow::CreatePanelContainer(QWidget* panel, QDockWidget* dock, PanelSizingFlags sizing)
+{
+    panel->setSizePolicy(GetPanelSizePolicy(panel, sizing, QSizePolicy::Maximum));
+
+    Qt::Alignment alignment;
+    if (sizing.testFlag(PanelSizing::CompactWidth)) {
+        alignment |= Qt::AlignLeft;
+    }
+    if (sizing.testFlag(PanelSizing::CompactHeight)) {
+        alignment |= Qt::AlignTop;
+    }
+
+    QWidget* container = new QWidget(dock);
+    QGridLayout* layout = new QGridLayout(container);
+    layout->setContentsMargins(0, 0, 0, 0);
+    layout->setSpacing(0);
+    layout->addWidget(panel, 0, 0, alignment);
+    container->setSizePolicy(GetPanelSizePolicy(panel, sizing, QSizePolicy::Preferred));
+
+    connect(dock, &QDockWidget::topLevelChanged, container, [container, sizing](bool floating)
+    {
+        const QSizePolicy::Policy policy = floating ? QSizePolicy::Maximum : QSizePolicy::Preferred;
+        container->setSizePolicy(GetPanelSizePolicy(container, sizing, policy));
+    });
+    return container;
+}
+
+QSizePolicy ControlWindow::GetPanelSizePolicy(QWidget* panel, PanelSizingFlags sizing, QSizePolicy::Policy compactPolicy)
+{
+    QSizePolicy policy = panel->sizePolicy();
+    if (sizing.testFlag(PanelSizing::CompactWidth)) {
+        policy.setHorizontalPolicy(compactPolicy);
+    }
+    if (sizing.testFlag(PanelSizing::CompactHeight)) {
+        policy.setVerticalPolicy(compactPolicy);
+    }
+    return policy;
 }
 
 void ControlWindow::CreateStandardPanels()
