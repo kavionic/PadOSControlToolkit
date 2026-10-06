@@ -15,8 +15,10 @@
 #include "PadOSControl/Widgets/SDCardSync.h"
 
 #include <QCloseEvent>
+#include <QContextMenuEvent>
 #include <QDockWidget>
 #include <QGridLayout>
+#include <QTabBar>
 
 static constexpr int CONTROL_WINDOW_LAYOUT_VERSION = 2;
 
@@ -90,6 +92,34 @@ void ControlWindow::closeEvent(QCloseEvent* event)
     settings.setValue("MainWindow/windowState", saveState(CONTROL_WINDOW_LAYOUT_VERSION));
     m_DeviceSession.Stop();
     QMainWindow::closeEvent(event);
+}
+
+void ControlWindow::contextMenuEvent(QContextMenuEvent* event)
+{
+    QWidget* child = childAt(event->pos());
+    while (child != nullptr && child->parentWidget() != this) {
+        child = child->parentWidget();
+    }
+
+    if (qobject_cast<QTabBar*>(child) != nullptr)
+    {
+        QMenu* popup = createPopupMenu();
+        if (popup != nullptr && !popup->isEmpty())
+        {
+            popup->setAttribute(Qt::WA_DeleteOnClose);
+            popup->popup(event->globalPos());
+            event->accept();
+        }
+        else
+        {
+            delete popup;
+            event->ignore();
+        }
+    }
+    else
+    {
+        QMainWindow::contextMenuEvent(event);
+    }
 }
 
 QWidget* ControlWindow::CreatePanelContainer(QWidget* panel, QDockWidget* dock, PanelSizingFlags sizing)

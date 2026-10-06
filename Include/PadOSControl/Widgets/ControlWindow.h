@@ -56,6 +56,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent* event) override;
+    void contextMenuEvent(QContextMenuEvent* event) override;
 
 private:
     QWidget* CreatePanelContainer(QWidget* panel, QDockWidget* dock, PanelSizingFlags sizing);
